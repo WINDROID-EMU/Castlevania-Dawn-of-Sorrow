@@ -2272,7 +2272,7 @@ MaintenanceResult start_child_job(MaintenanceJob& job) {
     result.started_ms = steady_ms();
     result.ok = true;
     return result;
-#elif defined(__linux__)
+#elif defined(__linux__) && !defined(__ANDROID__)
     const int log = ::open(result.log_path.c_str(),
                            O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (log < 0) {

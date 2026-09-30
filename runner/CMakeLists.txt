@@ -382,6 +382,8 @@ endif()
 
 if(DEFINED ENV{RECOMP_UI_ROOT})
     set(NDS_RECOMP_UI_ROOT_DEFAULT "$ENV{RECOMP_UI_ROOT}")
+elseif(EXISTS "${CMAKE_CURRENT_LIST_DIR}/../../recomp-ui/src/recomp_runtime_ui.h")
+    set(NDS_RECOMP_UI_ROOT_DEFAULT "${CMAKE_CURRENT_LIST_DIR}/../../recomp-ui")
 elseif(EXISTS "${CMAKE_CURRENT_LIST_DIR}/../../../recomp-ui/src/recomp_runtime_ui.h")
     set(NDS_RECOMP_UI_ROOT_DEFAULT "${CMAKE_CURRENT_LIST_DIR}/../../../recomp-ui")
 else()
@@ -396,7 +398,7 @@ add_library(nds_armv4t STATIC ${NDS_ARM_RECOMP_SOURCES})
 target_include_directories(nds_armv4t PUBLIC
     ${NDS_ARM_RECOMP_INCLUDE_DIRS})
 
-add_executable(nds_runner
+set(NDS_RUNNER_SOURCES
     src/runtime_arm.cpp
     # Out-of-line runtime_tick / runtime_should_yield / runtime_unwinding for
     # live shards published before those became header inlines. Must stay a
@@ -466,6 +468,13 @@ add_executable(nds_runner
     vendor/melonds/net/Net.cpp
     vendor/melonds/net/PacketDispatcher.cpp
     vendor/melonds/net/Net_Slirp.cpp)
+
+if(ANDROID)
+    add_library(nds_runner SHARED ${NDS_RUNNER_SOURCES})
+    set_target_properties(nds_runner PROPERTIES OUTPUT_NAME "main")
+else()
+    add_executable(nds_runner ${NDS_RUNNER_SOURCES})
+endif()
 set_target_properties(nds_runner PROPERTIES ENABLE_EXPORTS ON)
 ndsrecomp_limit_link(nds_runner)
 if(NOT NDS_PGO_MODE STREQUAL "OFF")
@@ -717,7 +726,9 @@ endif()
 # SDL is a host-only presentation layer. SDL3 is the default runtime frontend;
 # SDL2 and a no-frontend headless build are explicit compatibility choices.
 if(NDS_SDL_BACKEND STREQUAL "SDL3")
-    find_package(SDL3 CONFIG REQUIRED)
+    if(NOT TARGET SDL3::SDL3)
+        find_package(SDL3 CONFIG REQUIRED)
+    endif()
     if(NOT TARGET SDL3::SDL3)
         message(FATAL_ERROR "NDS_SDL_BACKEND=SDL3 requires target SDL3::SDL3")
     endif()
@@ -745,6 +756,9 @@ endif()
 if(CMAKE_DL_LIBS)
     target_link_libraries(nds_runner PRIVATE ${CMAKE_DL_LIBS})
 endif()
+if(ANDROID)
+    target_link_libraries(nds_runner PRIVATE log android OpenSLES GLESv2 EGL)
+endif()
 if(WIN32)
     target_link_libraries(nds_runner PRIVATE ws2_32)
     if(NDS_ENABLE_PCAP_BACKEND)
@@ -760,6 +774,7 @@ if(APPLE)
     target_link_options(nds_runner PRIVATE -Wl,-stack_size,0x4000000)
 endif()
 
+if(NOT ANDROID)
 find_package(Python3 COMPONENTS Interpreter QUIET)
 
   add_executable(frontend_config_test
@@ -1181,3 +1196,5 @@ ndsrecomp_link_tomlpp(frontend_config_test)
         COMMAND "${Python3_EXECUTABLE}"
                 "${CMAKE_CURRENT_SOURCE_DIR}/../tools/test_coverage_span_promotion.py")
   endif()
+endif() # NOT ANDROID
+

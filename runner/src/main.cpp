@@ -51,10 +51,14 @@
 #include "profile_report.h"
 #include "sha1.h"
 #include "title_banks.h"
-#include "coverage_manifest.h"
 #include "title_patches.h"
-#if defined(NDS_HAVE_COMPUTE_RENDERER)
-#include "melonds_compute/ComputeHost.h"
+#include "coverage_manifest.h"
+#if defined(NDS_HAVE_SDL3)
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_main.h>
+#elif defined(NDS_HAVE_SDL2)
+#include <SDL.h>
+#include <SDL_main.h>
 #endif
 
 // Generated per-CPU dispatch tables (C linkage).
