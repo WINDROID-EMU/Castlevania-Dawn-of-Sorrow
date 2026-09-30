@@ -80,6 +80,5 @@ runner/freebios/
 extracted/*.bin
 extracted/overlays/*.bin
 performance-*.jsonl
-smoke_test_results/
-smoke_test_results_v2/
+smoke_test_results*/
 dispatch_misses*.log

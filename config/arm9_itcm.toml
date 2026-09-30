@@ -106,3 +106,25 @@ cpu  = "arm9"
 kind = "runtime_observed"
 # hits = 73, seen as span
 
+
+[[entry_point]]
+addr = 0x01FF8548
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 344, seen as span
+
+[[entry_point]]
+addr = 0x01FF853C
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 172, seen as span
+
+[[entry_point]]
+addr = 0x01FF857C
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 172, seen as span
+

@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/FPS-60%20FPS%20Locked-blue?style=for-the-badge" alt="FPS" />
   <img src="https://img.shields.io/badge/CPU%20Headroom-%3E61.8%25-success?style=for-the-badge" alt="CPU Headroom" />
   <img src="https://img.shields.io/badge/Architecture-x86__64%20%7C%20ARM64-orange?style=for-the-badge" alt="Architecture" />
-  <img src="https://img.shields.io/badge/Native%20Functions-31%2C985-purple?style=for-the-badge" alt="Native Functions" />
+  <img src="https://img.shields.io/badge/Native%20Functions-32%2C343-purple?style=for-the-badge" alt="Native Functions" />
 </p>
 
 ---
@@ -31,7 +31,7 @@ O jogo foi completamente estabilizado e validado através de extensas sessões d
 - **Folga Livre de CPU**: **>61.8% de tempo ocioso** por quadro.
 - **Sobrecarga do Interpretador**: **Praticamente ZERO** (ARM9: 0.0014 ms/quadro, ARM7: 0.0016 ms/quadro). Mais de 99.9% de todo o código é executado nativamente.
 - **Sessões Validadas**: Mais de **44.600 quadros consecutivos** jogados sem falhas, com leitura e gravação de savegame EEPROM (bateria) 100% funcionais.
-- **Total de Funções Nativas Compiladas**: **31.985 funções C**.
+- **Total de Funções Nativas Compiladas**: **32.343 funções C**.
 
 ### 📊 Comparativo de Otimização de Telemetria
 
@@ -49,12 +49,12 @@ O jogo foi completamente estabilizado e validado através de extensas sessões d
 
 O jogo é dividido e compilado estaticamente em 6 bancos nativos:
 
-1. **`castlevania_arm9`** (ARM9 Main, `0x02000000`): **16.736 funções nativas**, dividido em 10 shards paralelos para compilação relâmpago no GCC/Clang (< 2 minutos).
-2. **`castlevania_arm9_itcm`** (ARM9 ITCM, `0x01FF8000`): **39 funções** responsáveis pelos loops de matemática e renderização rápida na memória ITCM.
+1. **`castlevania_arm9`** (ARM9 Main, `0x02000000`): **16.835 funções nativas**, dividido em 10 shards paralelos para compilação relâmpago no GCC/Clang (< 2 minutos).
+2. **`castlevania_arm9_itcm`** (ARM9 ITCM, `0x01FF8000`): **43 funções** responsáveis pelos loops de matemática e renderização rápida na memória ITCM.
 3. **`castlevania_arm9_overlay_0000`** (Overlay 00, `0x0219E3E0`): **7.395 funções nativas** do motor permanente de gameplay (física de movimento, monstros, magias e armas).
 4. **`castlevania_arm9_overlay_0001`** (Overlay 01, `0x02230A00`): **1.696 funções nativas** do módulo auxiliar permanente.
-5. **`castlevania_arm7`** (ARM7 Base, `0x02380000`): **4.167 funções nativas** de gerenciamento de hardware e I/O.
-6. **`castlevania_arm7_wram`** (ARM7 WRAM, `0x037F7E90`): **1.952 funções nativas** do driver de som e sincronia em memória rápida.
+5. **`castlevania_arm7`** (ARM7 Base, `0x02380000`): **4.420 funções nativas** de gerenciamento de hardware e I/O.
+6. **`castlevania_arm7_wram`** (ARM7 WRAM, `0x037F7E90`): **1.954 funções nativas** do driver de som e sincronia em memória rápida.
 
 ---
 

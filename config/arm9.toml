@@ -22751,3 +22751,431 @@ cpu  = "arm9"
 kind = "runtime_observed"
 # hits = 1, seen as span
 
+
+[[entry_point]]
+addr = 0x02042D90
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 722, seen as span
+
+[[entry_point]]
+addr = 0x020471B4
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 392, seen as span
+
+[[entry_point]]
+addr = 0x02042D48
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 362, seen as span
+
+[[entry_point]]
+addr = 0x02042D50
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 362, seen as span
+
+[[entry_point]]
+addr = 0x02042D88
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 361, seen as span
+
+[[entry_point]]
+addr = 0x0203E550
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 300, seen as span
+
+[[entry_point]]
+addr = 0x0203DC4C
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 299, seen as span
+
+[[entry_point]]
+addr = 0x020443B4
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 163, seen as span
+
+[[entry_point]]
+addr = 0x0203DC5C
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 99, seen as span
+
+[[entry_point]]
+addr = 0x02044200
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 88, seen as span
+
+[[entry_point]]
+addr = 0x0204420C
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 88, seen as span
+
+[[entry_point]]
+addr = 0x020442A0
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 86, seen as span
+
+[[entry_point]]
+addr = 0x020443A8
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 66, seen as span
+
+[[entry_point]]
+addr = 0x02044550
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 66, seen as span
+
+[[entry_point]]
+addr = 0x0204448C
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 48, seen as span
+
+[[entry_point]]
+addr = 0x020444B4
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 47, seen as span
+
+[[entry_point]]
+addr = 0x02044218
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 43, seen as span
+
+[[entry_point]]
+addr = 0x02044240
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 43, seen as span
+
+[[entry_point]]
+addr = 0x0204424C
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 43, seen as span
+
+[[entry_point]]
+addr = 0x02044258
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 43, seen as span
+
+[[entry_point]]
+addr = 0x02044260
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 43, seen as span
+
+[[entry_point]]
+addr = 0x02044280
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 43, seen as span
+
+[[entry_point]]
+addr = 0x020442C0
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 43, seen as span
+
+[[entry_point]]
+addr = 0x020442E0
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 43, seen as span
+
+[[entry_point]]
+addr = 0x020442F4
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 43, seen as span
+
+[[entry_point]]
+addr = 0x020442FC
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 43, seen as span
+
+[[entry_point]]
+addr = 0x02044308
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 33, seen as span
+
+[[entry_point]]
+addr = 0x02044310
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 33, seen as span
+
+[[entry_point]]
+addr = 0x02044320
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 33, seen as span
+
+[[entry_point]]
+addr = 0x02044340
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 33, seen as span
+
+[[entry_point]]
+addr = 0x02044514
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 33, seen as span
+
+[[entry_point]]
+addr = 0x02044538
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 33, seen as span
+
+[[entry_point]]
+addr = 0x0204455C
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 33, seen as span
+
+[[entry_point]]
+addr = 0x02044568
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 33, seen as span
+
+[[entry_point]]
+addr = 0x020443CC
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 32, seen as span
+
+[[entry_point]]
+addr = 0x020443E4
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 32, seen as span
+
+[[entry_point]]
+addr = 0x020443F8
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 32, seen as span
+
+[[entry_point]]
+addr = 0x02044448
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 32, seen as span
+
+[[entry_point]]
+addr = 0x02044574
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 32, seen as span
+
+[[entry_point]]
+addr = 0x020445E4
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 32, seen as span
+
+[[entry_point]]
+addr = 0x0204466C
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 32, seen as span
+
+[[entry_point]]
+addr = 0x02044660
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 22, seen as span
+
+[[entry_point]]
+addr = 0x02044698
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 20, seen as span
+
+[[entry_point]]
+addr = 0x02044420
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 16, seen as span
+
+[[entry_point]]
+addr = 0x0204449C
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 16, seen as span
+
+[[entry_point]]
+addr = 0x020444A4
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 16, seen as span
+
+[[entry_point]]
+addr = 0x020444AC
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 16, seen as span
+
+[[entry_point]]
+addr = 0x020444C4
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 15, seen as span
+
+[[entry_point]]
+addr = 0x02044620
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 11, seen as span
+
+[[entry_point]]
+addr = 0x02044628
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 11, seen as span
+
+[[entry_point]]
+addr = 0x0204467C
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 10, seen as span
+
+[[entry_point]]
+addr = 0x02044684
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 10, seen as span
+
+[[entry_point]]
+addr = 0x0204468C
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 10, seen as span
+
+[[entry_point]]
+addr = 0x0204EBDC
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 10, seen as span
+
+[[entry_point]]
+addr = 0x02001BE0
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 7, seen as span
+
+[[entry_point]]
+addr = 0x02060188
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 6, seen as span
+
+[[entry_point]]
+addr = 0x02060270
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 6, seen as span
+
+[[entry_point]]
+addr = 0x02042E4C
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 4, seen as span
+
+[[entry_point]]
+addr = 0x02001D54
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 3, seen as span
+
+[[entry_point]]
+addr = 0x02001CAC
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 1, seen as span
+
+[[entry_point]]
+addr = 0x0204FCE4
+mode = "arm"
+cpu  = "arm9"
+kind = "runtime_observed"
+# hits = 1, seen as span
+

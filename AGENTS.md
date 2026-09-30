@@ -15,7 +15,7 @@
 - **Estado**: **100% Jogável e Estável no PC (Linux x86_64)**.
 - **Desempenho**: **60 FPS estáveis**, tempo de emulação de CPU em **~6.35 ms por quadro** (orçamento total: 16.66 ms, folga de **>61.8%**).
 - **Sobrecarga do Interpretador**: Praticamente **ZERO** (ARM9: 0.0014 ms/frame, ARM7: 0.0016 ms/frame).
-- **Funções Estáticas**: **31.985 funções nativas compiladas** em 6 bancos.
+- **Funções Estáticas**: **32.343 funções nativas compiladas** em 6 bancos.
 - **Sessões validadas**: Mais de 44.600 quadros consecutivos jogados sem crashes, com savegame EEPROM funcional.
 
 ---

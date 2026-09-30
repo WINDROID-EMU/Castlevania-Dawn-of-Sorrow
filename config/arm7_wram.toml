@@ -3767,3 +3767,18 @@ cpu  = "arm7"
 kind = "runtime_observed"
 # hits = 2, seen as span
 
+
+[[entry_point]]
+addr = 0x037FB900
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 1, seen as span
+
+[[entry_point]]
+addr = 0x03803CA4
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 1, seen as span
+

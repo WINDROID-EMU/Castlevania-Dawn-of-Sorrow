@@ -2565,3 +2565,95 @@ addr = 0x2380018
 mode = "arm"
 name = "irq_vector"
 
+
+[[entry_point]]
+addr = 0x027C1C5C
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 4, seen as span
+
+[[entry_point]]
+addr = 0x027C87E4
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 2, seen as span
+
+[[entry_point]]
+addr = 0x027C05E0
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 1, seen as span
+
+[[entry_point]]
+addr = 0x027C1CF8
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 1, seen as span
+
+[[entry_point]]
+addr = 0x027C87EC
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 1, seen as span
+
+[[entry_point]]
+addr = 0x027D53F4
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 1, seen as span
+
+[[entry_point]]
+addr = 0x027D5400
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 1, seen as span
+
+[[entry_point]]
+addr = 0x027D5424
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 1, seen as span
+
+[[entry_point]]
+addr = 0x027D544C
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 1, seen as span
+
+[[entry_point]]
+addr = 0x027D5464
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 1, seen as span
+
+[[entry_point]]
+addr = 0x027D5484
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 1, seen as span
+
+[[entry_point]]
+addr = 0x027D549C
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 1, seen as span
+
+[[entry_point]]
+addr = 0x027D54A4
+mode = "arm"
+cpu  = "arm7"
+kind = "runtime_observed"
+# hits = 1, seen as span
+
