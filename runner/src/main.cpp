@@ -333,7 +333,33 @@ std::filesystem::path exe_dir_from_argv(const char* argv0) {
 
 }  // namespace
 
+static inline void set_env_var_default(const char* name, const char* value) {
+#if defined(_WIN32)
+    _putenv_s(name, value);
+#else
+    ::setenv(name, value, 0);
+#endif
+}
+
 int main(int argc, char** argv) {
+    // Android performance optimizations: set environment variables for
+    // maximum performance on mobile devices. These override user settings
+    // when not already set, preserving flexibility for advanced users.
+    //
+    // NDS_3D_RENDERER=soft: Force software renderer (OpenGL 4.3 compute not
+    // available on Android)
+    // NDS_3D_THREADED=1: Enable threaded software rendering (~16-20% gain)
+    // NDS_CPU_FAST_POLL=1: Enable fast CPU polling optimization
+    if (!std::getenv("NDS_3D_RENDERER")) {
+        set_env_var_default("NDS_3D_RENDERER", "soft");
+    }
+    if (!std::getenv("NDS_3D_THREADED")) {
+        set_env_var_default("NDS_3D_THREADED", "1");
+    }
+    if (!std::getenv("NDS_CPU_FAST_POLL")) {
+        set_env_var_default("NDS_CPU_FAST_POLL", "1");
+    }
+
     // stderr is the runner's diagnostic stream and is read from files by
     // harnesses and field-bundle collectors. Under Windows UCRT a redirected
     // stderr becomes BLOCK buffered, so a force-killed process loses its tail

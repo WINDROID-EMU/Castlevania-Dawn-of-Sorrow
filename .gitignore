@@ -74,3 +74,12 @@ Thumbs.db
 
 # Runtime-generated per-install identity (written by the runner when profile dir = repo root)
 runner/freebios/
+# ── Game dumps, extracted binaries, and telemetry logs ─────────────────────
+*.nds
+*.sav
+extracted/*.bin
+extracted/overlays/*.bin
+performance-*.jsonl
+smoke_test_results/
+smoke_test_results_v2/
+dispatch_misses*.log

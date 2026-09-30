@@ -109,6 +109,9 @@ def main() -> int:
     ap.add_argument("--fuzz-steps", type=int, default=40)
     ap.add_argument("--settle", type=int, default=60)
     ap.add_argument("--seed", type=int, default=0x5A17)
+    ap.add_argument("--freebios", action="store_true", help="Use reimplemented freebios")
+    ap.add_argument("--boot", choices=["lle", "direct"], default="direct", help="Boot mode")
+    ap.add_argument("--save-path", type=Path, help="Path to battery save (.sav)")
     args = ap.parse_args()
 
     args.out.mkdir(parents=True, exist_ok=True)
@@ -116,9 +119,16 @@ def main() -> int:
     misses = args.runner.parent / "dispatch_misses.log"
     misses_before = misses.stat().st_size if misses.exists() else 0
 
-    cmd = [str(args.runner), str(args.bios), "--serve", "--port", str(args.port),
-           "--rom", str(args.rom.resolve()), "--no-save",
-           "--startup-mode", "automatic"]
+    cmd = [str(args.runner.resolve()), str(args.bios.resolve()), "--serve", "--port", str(args.port),
+           "--rom", str(args.rom.resolve()),
+           "--startup-mode", "automatic",
+           "--boot", args.boot]
+    if args.freebios:
+        cmd.append("--freebios")
+    if args.save_path:
+        cmd += ["--save-path", str(args.save_path.resolve())]
+    else:
+        cmd.append("--no-save")
     if args.config:
         cmd += ["--config", str(args.config.resolve())]
     proc = subprocess.Popen(cmd, cwd=str(args.runner.parent),

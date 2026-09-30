@@ -17,6 +17,20 @@ if(NOT MSVC)
     add_compile_options(-Wall -Wextra -Wno-unused-parameter)
 endif()
 
+# Android-specific optimizations for ARM64
+if(ANDROID)
+    if(ANDROID_ABI STREQUAL "arm64-v8a")
+        add_compile_options(
+            -O3
+            -march=armv8-a
+            -mtune=cortex-a76
+            -ffast-math
+            -fomit-frame-pointer
+        )
+        message(STATUS "Android ARM64 optimizations enabled for ${ANDROID_ABI}")
+    endif()
+endif()
+
 arm_recomp_core_sources(NDS_ARM_RECOMP_SOURCES armv4t)
 arm_recomp_core_include_dirs(NDS_ARM_RECOMP_INCLUDE_DIRS armv4t)
 
