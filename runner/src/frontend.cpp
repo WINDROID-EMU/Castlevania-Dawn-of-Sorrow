@@ -19,6 +19,8 @@
 
 #include "debug_server.h"
 #include "diagnostics.h"
+#include "dispatch_stats.h"
+#include "tier3.h"
 #include "gpu2d.h"
 #include "gpu3d.h"
 #include "melonds_compute/TextureUpscale.h"
@@ -32,6 +34,10 @@
 #include "title_patches.h"
 #if defined(NDS_HAVE_COMPUTE_RENDERER)
 #include "melonds_compute/ComputeHost.h"
+#endif
+#if defined(__ANDROID__)
+#include <android/log.h>
+#include <sys/prctl.h>
 #endif
 
 namespace {
@@ -199,6 +205,9 @@ namespace {
 #undef SDL_CONTROLLER_BUTTON_RIGHTSHOULDER
 #undef SDL_CONTROLLER_BUTTON_RIGHTSTICK
 #undef SDL_CONTROLLER_BUTTON_START
+#undef SDL_CONTROLLER_BUTTON_GUIDE
+#undef SDL_CONTROLLER_BUTTON_TOUCHPAD
+#undef SDL_CONTROLLER_BUTTON_MISC1
 #undef SDL_CONTROLLER_BUTTON_X
 #undef SDL_CONTROLLER_BUTTON_Y
 #undef SDL_CONTROLLERBUTTONDOWN
@@ -242,6 +251,9 @@ namespace {
 #define SDL_CONTROLLER_BUTTON_RIGHTSHOULDER SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER
 #define SDL_CONTROLLER_BUTTON_RIGHTSTICK SDL_GAMEPAD_BUTTON_RIGHT_STICK
 #define SDL_CONTROLLER_BUTTON_START SDL_GAMEPAD_BUTTON_START
+#define SDL_CONTROLLER_BUTTON_GUIDE SDL_GAMEPAD_BUTTON_GUIDE
+#define SDL_CONTROLLER_BUTTON_TOUCHPAD SDL_GAMEPAD_BUTTON_TOUCHPAD
+#define SDL_CONTROLLER_BUTTON_MISC1 SDL_GAMEPAD_BUTTON_MISC1
 #define SDL_CONTROLLER_BUTTON_X SDL_GAMEPAD_BUTTON_WEST
 #define SDL_CONTROLLER_BUTTON_Y SDL_GAMEPAD_BUTTON_NORTH
 #define SDL_CONTROLLERBUTTONDOWN SDL_EVENT_GAMEPAD_BUTTON_DOWN
@@ -968,7 +980,8 @@ uint32_t audio_queue_count(const NdsAudioDevice& device, AudioQueue& queue) {
 }
 
 uint32_t drain_audio(const NdsAudioDevice& device, AudioQueue& queue,
-                     bool throttle, uint32_t pace_floor, bool& queue_error) {
+                     bool throttle, uint32_t pace_floor, bool& queue_error,
+                     uint64_t frame_start = 0, uint64_t frame_budget_ticks = 0) {
     if (!device) return 0;
     std::array<int16_t, 2048> samples{};
     for (;;) {
@@ -1016,14 +1029,17 @@ uint32_t drain_audio(const NdsAudioDevice& device, AudioQueue& queue,
     }
     // Audio is the host's real-time clock. Never drop a produced block: if the
     // emulator is faster than the DS cadence, let SDL consume the backlog
-    // before emulating another frame. pace_floor is the current allowance:
-    // kAudioQueueFrames in steady state, temporarily higher right after the
-    // boot prebuffer (the caller decays it a fixed step per frame). The sleep
-    // only stops the queue RISING above the floor — it never forces the queue
-    // down while the emulator is running behind, so a slow stretch spends the
-    // buffered runway instead of having it slept away.
+    // before emulating another frame. pace_floor is the current allowance.
     uint32_t queued = audio_queue_count(device, queue);
     while (throttle && queued > pace_floor) {
+        if (frame_budget_ticks > 0 && frame_start > 0) {
+            const uint64_t elapsed = SDL_GetPerformanceCounter() - frame_start;
+            if (elapsed >= frame_budget_ticks) {
+                // If the current frame has reached or exceeded the 60 FPS target budget,
+                // do not sleep; yield immediately to maintain solid 60 FPS.
+                break;
+            }
+        }
         SDL_Delay(1);
         queued = audio_queue_count(device, queue);
     }
@@ -1269,10 +1285,28 @@ bool runtime_menu_key_input(SDL_Scancode scancode,
 }
 
 bool runtime_menu_controller_input(SDL_GameControllerButton button,
-                                   RecompRuntimeUiInput* input) {
+                                   RecompRuntimeUiInput* input,
+                                   bool select_held = false,
+                                   bool is_open = false) {
     if (!input) return false;
+    if (!is_open) {
+        // When menu is closed, only dedicated menu buttons or SELECT+START combo can open it.
+        // NDS START alone belongs to the game (Castlevania pause/status menu)!
+        if (button == SDL_CONTROLLER_BUTTON_GUIDE ||
+            button == SDL_CONTROLLER_BUTTON_TOUCHPAD ||
+            button == SDL_CONTROLLER_BUTTON_MISC1 ||
+            (button == SDL_CONTROLLER_BUTTON_START && select_held)) {
+            *input = RECOMP_RUNTIME_UI_INPUT_TOGGLE;
+            return true;
+        }
+        return false;
+    }
+
     switch (button) {
         case SDL_CONTROLLER_BUTTON_START:
+        case SDL_CONTROLLER_BUTTON_GUIDE:
+        case SDL_CONTROLLER_BUTTON_TOUCHPAD:
+        case SDL_CONTROLLER_BUTTON_MISC1:
             *input = RECOMP_RUNTIME_UI_INPUT_TOGGLE;
             return true;
         case SDL_CONTROLLER_BUTTON_BACK:
@@ -2032,6 +2066,10 @@ int nds_run_interactive_frontend(const NdsFrontendOptions& initial_options) {
         std::fprintf(stderr, "[sdl] init failed: %s\n", SDL_GetError());
         return 1;
     }
+#if defined(__ANDROID__)
+    // Remove Android kernel timer slack (default 10-40ms) on frontend thread
+    prctl(PR_SET_TIMERSLACK, 50000, 0, 0, 0);
+#endif
     if (!sdl_set_thread_priority_high())
         std::fprintf(stderr, "[sdl] thread priority unchanged: %s\n",
                      SDL_GetError());
@@ -2335,9 +2373,6 @@ int nds_run_interactive_frontend(const NdsFrontendOptions& initial_options) {
     bool running = true;
     RuntimeMenuState runtime_menu_state{&options, &running, false};
     static const RecompRuntimeUiItem runtime_menu_items[] = {
-        {kRuntimeMouseSensitivityKey, "Input", "Mouse sensitivity",
-         "Prime Controls relative aim speed.",
-         RECOMP_RUNTIME_UI_INT, 10, 400, 1, nullptr, 0, nullptr},
         {kRuntimeResumeKey, "System", "Resume game",
          "Close settings and return to the game.",
          RECOMP_RUNTIME_UI_ACTION, 0, 0, 0, nullptr, 0, nullptr},
@@ -2346,7 +2381,7 @@ int nds_run_interactive_frontend(const NdsFrontendOptions& initial_options) {
          RECOMP_RUNTIME_UI_ACTION, 0, 0, 0, nullptr, 0, nullptr},
     };
     RecompRuntimeUiConfig runtime_menu_config{};
-    runtime_menu_config.title = "Metroid Prime Hunters";
+    runtime_menu_config.title = "Castlevania: Dawn of Sorrow";
     runtime_menu_config.subtitle = "Runtime Settings";
     runtime_menu_config.items = runtime_menu_items;
     runtime_menu_config.item_count =
@@ -3221,7 +3256,8 @@ int nds_run_interactive_frontend(const NdsFrontendOptions& initial_options) {
                 const bool was_open = runtime_menu_open();
                 const auto button = static_cast<SDL_GameControllerButton>(
                     sdl_controller_button(event));
-                if (runtime_menu_controller_input(button, &menu_input) &&
+                const bool select_held = (controller_pressed & (1u << 2)) != 0;
+                if (runtime_menu_controller_input(button, &menu_input, select_held, was_open) &&
                     runtime_ui &&
                     recomp_runtime_ui_handle_input(
                         runtime_ui, menu_input,
@@ -3915,9 +3951,10 @@ int nds_run_interactive_frontend(const NdsFrontendOptions& initial_options) {
         if (turbo_active) {
             discard_spu_output();
         } else {
+            const uint64_t frame_budget_ticks = (frequency * 1000u) / 59826u;
             queued = drain_audio(
                 audio, audio_queue, audio_started, audio_pace_floor,
-                audio_queue_error);
+                audio_queue_error, phase0, frame_budget_ticks);
         }
         const uint64_t frame_drain_ticks =
             SDL_GetPerformanceCounter() - phase2;
@@ -4059,6 +4096,45 @@ int nds_run_interactive_frontend(const NdsFrontendOptions& initial_options) {
                 SDL_SetWindowTitle(presentation.windows[1],
                                    bottom_title.c_str());
             }
+#if defined(__ANDROID__)
+            static uint64_t prev_phase_emu_ticks = 0;
+            static uint64_t prev_phase_upload_ticks = 0;
+            static uint64_t prev_phase_draw_ticks = 0;
+            static uint64_t prev_phase_swap_ticks = 0;
+            static uint64_t prev_phase_drain_ticks = 0;
+            static Tier3Stats prev_tier3{};
+
+            const uint64_t delta_emu = phase_emu_ticks - prev_phase_emu_ticks;
+            const uint64_t delta_upload = phase_upload_ticks - prev_phase_upload_ticks;
+            const uint64_t delta_draw = phase_draw_ticks - prev_phase_draw_ticks;
+            const uint64_t delta_swap = phase_swap_ticks - prev_phase_swap_ticks;
+            const uint64_t delta_drain = phase_drain_ticks - prev_phase_drain_ticks;
+
+            const Tier3Stats current_tier3 = tier3_stats();
+            const uint64_t delta_t3_insns9 = current_tier3.instructions[0] - prev_tier3.instructions[0];
+            const uint64_t delta_t3_insns7 = current_tier3.instructions[1] - prev_tier3.instructions[1];
+
+            prev_phase_emu_ticks = phase_emu_ticks;
+            prev_phase_upload_ticks = phase_upload_ticks;
+            prev_phase_draw_ticks = phase_draw_ticks;
+            prev_phase_swap_ticks = phase_swap_ticks;
+            prev_phase_drain_ticks = phase_drain_ticks;
+            prev_tier3 = current_tier3;
+
+            const double interval_frames = fps_frames > 0 ? static_cast<double>(fps_frames) : 1.0;
+            const double emu_ms = (static_cast<double>(delta_emu) * 1000.0) / (static_cast<double>(frequency) * interval_frames);
+            const double upload_ms = (static_cast<double>(delta_upload) * 1000.0) / (static_cast<double>(frequency) * interval_frames);
+            const double draw_ms = (static_cast<double>(delta_draw) * 1000.0) / (static_cast<double>(frequency) * interval_frames);
+            const double swap_ms = (static_cast<double>(delta_swap) * 1000.0) / (static_cast<double>(frequency) * interval_frames);
+            const double drain_ms = (static_cast<double>(delta_drain) * 1000.0) / (static_cast<double>(frequency) * interval_frames);
+
+            __android_log_print(ANDROID_LOG_INFO, "CastlevaniaPerf",
+                "TELEMETRY: FPS=%.1f | emu=%.2fms | upload=%.2fms | draw=%.2fms | swap=%.2fms | drain(audio_pace)=%.2fms | t3_insn9=%llu | t3_insn7=%llu | frames=%llu",
+                fps, emu_ms, upload_ms, draw_ms, swap_ms, drain_ms,
+                (unsigned long long)delta_t3_insns9,
+                (unsigned long long)delta_t3_insns7,
+                (unsigned long long)shown_frames);
+#endif
             fps_frames = 0;
             fps_start = counter;
         }

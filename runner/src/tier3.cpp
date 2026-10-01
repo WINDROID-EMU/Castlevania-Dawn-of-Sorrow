@@ -47,6 +47,10 @@ Tier3Stats g_stats{};
 std::vector<Tier3CoverageEntry> g_coverage;
 std::unordered_map<uint64_t, uint32_t> g_coverage_index;
 
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
+
 void coverage_note(uint32_t pc, bool thumb, uint8_t kind, uint32_t caller) {
     // beads-yjp.28: recording is unconditional. This used to be gated behind
     // g_discover_static_misses, which no shipped launcher passes, so a
@@ -67,6 +71,11 @@ void coverage_note(uint32_t pc, bool thumb, uint8_t kind, uint32_t caller) {
         ++g_coverage[found->second].hits;
         return;
     }
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_WARN, "CastlevaniaT3",
+                        "NEW TIER3 MISS: cpu=%d pc=0x%08X thumb=%d kind=%d caller=0x%08X",
+                        cpu, pc, thumb ? 1 : 0, kind, caller);
+#endif
     g_coverage_index.emplace(key, static_cast<uint32_t>(g_coverage.size()));
     g_coverage.push_back({1u, pc, caller, cpu,
                           static_cast<uint8_t>(thumb ? 1u : 0u), kind});

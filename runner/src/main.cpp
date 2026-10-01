@@ -44,6 +44,9 @@
 #include "live_overlay.h"
 #include "live_overlay_platform.h"
 #include "melonds_compute/TextureUpscale.h"
+#if defined(NDS_HAVE_COMPUTE_RENDERER)
+#include "melonds_compute/ComputeHost.h"
+#endif
 #include "net/net_ring.h"
 #include "net/net_capture.h"
 #include "net/wfc_provider.h"
@@ -344,16 +347,67 @@ static inline void set_env_var_default(const char* name, const char* value) {
     ::setenv(name, value, 0);
 #endif
 }
+#if defined(__ANDROID__)
+#include <android/log.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <sys/prctl.h>
+#include <sys/resource.h>
+#include <sched.h>
+
+static int s_log_pfd[2] = {-1, -1};
+static pthread_t s_log_thread;
+static const char* kLogTag = "CastlevaniaNDS";
+
+static void* android_log_reader_thread(void*) {
+    ssize_t rdsz;
+    char buf[2048];
+    while ((rdsz = read(s_log_pfd[0], buf, sizeof(buf) - 1)) > 0) {
+        if (rdsz > 0 && buf[rdsz - 1] == '\n') --rdsz;
+        buf[rdsz] = '\0';
+        __android_log_write(ANDROID_LOG_INFO, kLogTag, buf);
+    }
+    return nullptr;
+}
+
+static void start_android_log_redirect() {
+    setvbuf(stdout, nullptr, _IOLBF, 0);
+    setvbuf(stderr, nullptr, _IONBF, 0);
+    if (pipe(s_log_pfd) == 0) {
+        dup2(s_log_pfd[1], STDOUT_FILENO);
+        dup2(s_log_pfd[1], STDERR_FILENO);
+        if (pthread_create(&s_log_thread, nullptr, android_log_reader_thread, nullptr) == 0) {
+            pthread_detach(s_log_thread);
+        }
+    }
+}
+#endif
 
 int main(int argc, char** argv) {
+#if defined(__ANDROID__)
+    start_android_log_redirect();
+    __android_log_print(ANDROID_LOG_INFO, "CastlevaniaNDS", "=== Castlevania NDS Runner (SDL3 ARM64) Started ===");
+    prctl(PR_SET_TIMERSLACK, 50000, 0, 0, 0);
+
+    // Bind emulator thread to Prime core (3.19 GHz) and Gold cores (2.42 GHz)
+    // to prevent scheduling on slow Cortex-A55 LITTLE cores (cores 0..3)
+    long num_cores = sysconf(_SC_NPROCESSORS_ONLN);
+    if (num_cores >= 8) {
+        cpu_set_t cpuset;
+        CPU_ZERO(&cpuset);
+        CPU_SET(num_cores - 1, &cpuset); // Core 7 (Prime 3.19 GHz)
+        CPU_SET(num_cores - 2, &cpuset); // Core 6 (Gold 2.42 GHz)
+        CPU_SET(num_cores - 3, &cpuset); // Core 5 (Gold 2.42 GHz)
+        if (sched_setaffinity(0, sizeof(cpuset), &cpuset) == 0) {
+            __android_log_print(ANDROID_LOG_INFO, "CastlevaniaNDS",
+                                "[affinity] Bound emulator thread to Prime/Gold cores %ld..%ld",
+                                num_cores - 3, num_cores - 1);
+        }
+    }
+    setpriority(PRIO_PROCESS, 0, -10);
+#endif
     // Android performance optimizations: set environment variables for
-    // maximum performance on mobile devices. These override user settings
-    // when not already set, preserving flexibility for advanced users.
-    //
-    // NDS_3D_RENDERER=soft: Force software renderer (OpenGL 4.3 compute not
-    // available on Android)
-    // NDS_3D_THREADED=1: Enable threaded software rendering (~16-20% gain)
-    // NDS_CPU_FAST_POLL=1: Enable fast CPU polling optimization
+    // maximum performance on mobile devices.
     if (!std::getenv("NDS_3D_RENDERER")) {
         set_env_var_default("NDS_3D_RENDERER", "soft");
     }
@@ -363,6 +417,19 @@ int main(int argc, char** argv) {
     if (!std::getenv("NDS_CPU_FAST_POLL")) {
         set_env_var_default("NDS_CPU_FAST_POLL", "1");
     }
+#if defined(__ANDROID__)
+    // On mobile, inline 2D rasterization takes only ~0.5ms directly on the emu
+    // thread and completely avoids 10ms+ cross-cluster mutex/fence wait delays.
+    if (!std::getenv("NDS_GPU2D_THREADED")) {
+        set_env_var_default("NDS_GPU2D_THREADED", "1");
+    }
+    if (!std::getenv("NDS_GPU2D_WORKERS")) {
+        set_env_var_default("NDS_GPU2D_WORKERS", "2");
+    }
+    if (!std::getenv("NDS_GPU2D_ADAPTIVE_WORKERS")) {
+        set_env_var_default("NDS_GPU2D_ADAPTIVE_WORKERS", "0");
+    }
+#endif
 
     // stderr is the runner's diagnostic stream and is read from files by
     // harnesses and field-bundle collectors. Under Windows UCRT a redirected

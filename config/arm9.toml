@@ -23179,3 +23179,463 @@ cpu  = "arm9"
 kind = "runtime_observed"
 # hits = 1, seen as span
 
+
+[[entry_point]]
+addr = 0x02025704
+mode = "arm"
+name = "FUN_02025704"
+
+[[entry_point]]
+addr = 0x02025708
+mode = "arm"
+name = "FUN_02025708"
+
+[[entry_point]]
+addr = 0x0202570C
+mode = "arm"
+name = "FUN_0202570c"
+
+[[entry_point]]
+addr = 0x0202780C
+mode = "arm"
+name = "FUN_0202780c"
+
+[[entry_point]]
+addr = 0x02027830
+mode = "arm"
+name = "FUN_02027830"
+
+[[entry_point]]
+addr = 0x02027868
+mode = "arm"
+name = "FUN_02027868"
+
+[[entry_point]]
+addr = 0x02027B38
+mode = "arm"
+name = "FUN_02027b38"
+
+[[entry_point]]
+addr = 0x02027B44
+mode = "arm"
+name = "FUN_02027b44"
+
+[[entry_point]]
+addr = 0x02027B48
+mode = "arm"
+name = "FUN_02027b48"
+
+[[entry_point]]
+addr = 0x02027B4C
+mode = "arm"
+name = "FUN_02027b4c"
+
+[[entry_point]]
+addr = 0x02027B58
+mode = "arm"
+name = "FUN_02027b58"
+
+[[entry_point]]
+addr = 0x02027B78
+mode = "arm"
+name = "FUN_02027b78"
+
+[[entry_point]]
+addr = 0x02027B80
+mode = "arm"
+name = "FUN_02027b80"
+
+[[entry_point]]
+addr = 0x02027BA0
+mode = "arm"
+name = "FUN_02027ba0"
+
+[[entry_point]]
+addr = 0x02027BD4
+mode = "arm"
+name = "FUN_02027bd4"
+
+[[entry_point]]
+addr = 0x02027BF8
+mode = "arm"
+name = "FUN_02027bf8"
+
+[[entry_point]]
+addr = 0x02027BFC
+mode = "arm"
+name = "FUN_02027bfc"
+
+[[entry_point]]
+addr = 0x02027C20
+mode = "arm"
+name = "FUN_02027c20"
+
+[[entry_point]]
+addr = 0x02027C2C
+mode = "arm"
+name = "FUN_02027c2c"
+
+[[entry_point]]
+addr = 0x02027C30
+mode = "arm"
+name = "FUN_02027c30"
+
+[[entry_point]]
+addr = 0x02027C34
+mode = "arm"
+name = "FUN_02027c34"
+
+[[entry_point]]
+addr = 0x02027C3C
+mode = "arm"
+name = "FUN_02027c3c"
+
+[[entry_point]]
+addr = 0x02027C40
+mode = "arm"
+name = "FUN_02027c40"
+
+[[entry_point]]
+addr = 0x02027C44
+mode = "arm"
+name = "FUN_02027c44"
+
+[[entry_point]]
+addr = 0x02027C5C
+mode = "arm"
+name = "FUN_02027c5c"
+
+[[entry_point]]
+addr = 0x02027C60
+mode = "arm"
+name = "FUN_02027c60"
+
+[[entry_point]]
+addr = 0x02027C64
+mode = "arm"
+name = "FUN_02027c64"
+
+[[entry_point]]
+addr = 0x02027C6C
+mode = "arm"
+name = "FUN_02027c6c"
+
+[[entry_point]]
+addr = 0x02027C94
+mode = "arm"
+name = "FUN_02027c94"
+
+[[entry_point]]
+addr = 0x02027C9C
+mode = "arm"
+name = "FUN_02027c9c"
+
+[[entry_point]]
+addr = 0x02027CB8
+mode = "arm"
+name = "FUN_02027cb8"
+
+[[entry_point]]
+addr = 0x02027CBC
+mode = "arm"
+name = "FUN_02027cbc"
+
+[[entry_point]]
+addr = 0x02027CC8
+mode = "arm"
+name = "FUN_02027cc8"
+
+[[entry_point]]
+addr = 0x02027CCC
+mode = "arm"
+name = "FUN_02027ccc"
+
+[[entry_point]]
+addr = 0x02027D4C
+mode = "arm"
+name = "FUN_02027d4c"
+
+[[entry_point]]
+addr = 0x02027D50
+mode = "arm"
+name = "FUN_02027d50"
+
+[[entry_point]]
+addr = 0x02027D54
+mode = "arm"
+name = "FUN_02027d54"
+
+[[entry_point]]
+addr = 0x02027D5C
+mode = "arm"
+name = "FUN_02027d5c"
+
+[[entry_point]]
+addr = 0x02027D80
+mode = "arm"
+name = "FUN_02027d80"
+
+[[entry_point]]
+addr = 0x02027D84
+mode = "arm"
+name = "FUN_02027d84"
+
+[[entry_point]]
+addr = 0x02027DAC
+mode = "arm"
+name = "FUN_02027dac"
+
+[[entry_point]]
+addr = 0x02027DB0
+mode = "arm"
+name = "FUN_02027db0"
+
+[[entry_point]]
+addr = 0x02027DF0
+mode = "arm"
+name = "FUN_02027df0"
+
+[[entry_point]]
+addr = 0x02027E00
+mode = "arm"
+name = "FUN_02027e00"
+
+[[entry_point]]
+addr = 0x020282E0
+mode = "arm"
+name = "FUN_020282e0"
+
+[[entry_point]]
+addr = 0x020282F4
+mode = "arm"
+name = "FUN_020282f4"
+
+[[entry_point]]
+addr = 0x0202927C
+mode = "arm"
+name = "FUN_0202927c"
+
+[[entry_point]]
+addr = 0x02029280
+mode = "arm"
+name = "FUN_02029280"
+
+[[entry_point]]
+addr = 0x020292A8
+mode = "arm"
+name = "FUN_020292a8"
+
+[[entry_point]]
+addr = 0x020292B4
+mode = "arm"
+name = "FUN_020292b4"
+
+[[entry_point]]
+addr = 0x020292C0
+mode = "arm"
+name = "FUN_020292c0"
+
+[[entry_point]]
+addr = 0x020292D0
+mode = "arm"
+name = "FUN_020292d0"
+
+[[entry_point]]
+addr = 0x020292E4
+mode = "arm"
+name = "FUN_020292e4"
+
+[[entry_point]]
+addr = 0x020292FC
+mode = "arm"
+name = "FUN_020292fc"
+
+[[entry_point]]
+addr = 0x02029304
+mode = "arm"
+name = "FUN_02029304"
+
+[[entry_point]]
+addr = 0x02029308
+mode = "arm"
+name = "FUN_02029308"
+
+[[entry_point]]
+addr = 0x0202931C
+mode = "arm"
+name = "FUN_0202931c"
+
+[[entry_point]]
+addr = 0x02029340
+mode = "arm"
+name = "FUN_02029340"
+
+[[entry_point]]
+addr = 0x02029348
+mode = "arm"
+name = "FUN_02029348"
+
+[[entry_point]]
+addr = 0x02029360
+mode = "arm"
+name = "FUN_02029360"
+
+[[entry_point]]
+addr = 0x02029374
+mode = "arm"
+name = "FUN_02029374"
+
+[[entry_point]]
+addr = 0x0202938C
+mode = "arm"
+name = "FUN_0202938c"
+
+[[entry_point]]
+addr = 0x02029390
+mode = "arm"
+name = "FUN_02029390"
+
+[[entry_point]]
+addr = 0x020293AC
+mode = "arm"
+name = "FUN_020293ac"
+
+[[entry_point]]
+addr = 0x020293C0
+mode = "arm"
+name = "FUN_020293c0"
+
+[[entry_point]]
+addr = 0x020293D8
+mode = "arm"
+name = "FUN_020293d8"
+
+[[entry_point]]
+addr = 0x020293E0
+mode = "arm"
+name = "FUN_020293e0"
+
+[[entry_point]]
+addr = 0x02029544
+mode = "arm"
+name = "FUN_02029544"
+
+[[entry_point]]
+addr = 0x02029548
+mode = "arm"
+name = "FUN_02029548"
+
+[[entry_point]]
+addr = 0x0202FE34
+mode = "arm"
+name = "FUN_0202fe34"
+
+[[entry_point]]
+addr = 0x0202FE38
+mode = "arm"
+name = "FUN_0202fe38"
+
+[[entry_point]]
+addr = 0x0202FE3C
+mode = "arm"
+name = "FUN_0202fe3c"
+
+[[entry_point]]
+addr = 0x0203E554
+mode = "arm"
+name = "FUN_0203e554"
+
+[[entry_point]]
+addr = 0x0203E558
+mode = "arm"
+name = "FUN_0203e558"
+
+[[entry_point]]
+addr = 0x0203E55C
+mode = "arm"
+name = "FUN_0203e55c"
+
+[[entry_point]]
+addr = 0x02042D4C
+mode = "arm"
+name = "FUN_02042d4c"
+
+[[entry_point]]
+addr = 0x02042E50
+mode = "arm"
+name = "FUN_02042e50"
+
+[[entry_point]]
+addr = 0x02042E54
+mode = "arm"
+name = "FUN_02042e54"
+
+[[entry_point]]
+addr = 0x02042E58
+mode = "arm"
+name = "FUN_02042e58"
+
+[[entry_point]]
+addr = 0x020433D4
+mode = "arm"
+name = "FUN_020433d4"
+
+[[entry_point]]
+addr = 0x020433D8
+mode = "arm"
+name = "FUN_020433d8"
+
+[[entry_point]]
+addr = 0x0204E0FC
+mode = "arm"
+name = "FUN_0204e0fc"
+
+[[entry_point]]
+addr = 0x0204E104
+mode = "arm"
+name = "FUN_0204e104"
+
+[[entry_point]]
+addr = 0x0204EBE0
+mode = "arm"
+name = "FUN_0204ebe0"
+
+[[entry_point]]
+addr = 0x0204EBE4
+mode = "arm"
+name = "FUN_0204ebe4"
+
+[[entry_point]]
+addr = 0x0204EC80
+mode = "arm"
+name = "FUN_0204ec80"
+
+[[entry_point]]
+addr = 0x0206018C
+mode = "arm"
+name = "FUN_0206018c"
+
+[[entry_point]]
+addr = 0x02060190
+mode = "arm"
+name = "FUN_02060190"
+
+[[entry_point]]
+addr = 0x02060274
+mode = "arm"
+name = "FUN_02060274"
+
+[[entry_point]]
+addr = 0x02060278
+mode = "arm"
+name = "FUN_02060278"
+
+[[entry_point]]
+addr = 0x0203DC50
+mode = "arm"
+name = "FUN_0203dc50"
+
+[[entry_point]]
+addr = 0x0203DC54
+mode = "arm"
+name = "FUN_0203dc54"

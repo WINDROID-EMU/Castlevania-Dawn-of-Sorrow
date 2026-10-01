@@ -236,8 +236,13 @@ if(SM64DS_BANK_SOURCES AND NOT MSVC)
         PROPERTIES COMPILE_OPTIONS "-w;-O2;-g0")
 endif()
 if(TITLE_BANK_SOURCES AND NOT MSVC)
-    set_source_files_properties(${TITLE_BANK_SOURCES}
-        PROPERTIES COMPILE_OPTIONS "-w;-O2;-g0")
+    if(ANDROID AND ANDROID_ABI STREQUAL "arm64-v8a")
+        set_source_files_properties(${TITLE_BANK_SOURCES}
+            PROPERTIES COMPILE_OPTIONS "-w;-O3;-march=armv8-a;-mtune=cortex-a76;-ffast-math;-fomit-frame-pointer;-g0")
+    else()
+        set_source_files_properties(${TITLE_BANK_SOURCES}
+            PROPERTIES COMPILE_OPTIONS "-w;-O2;-g0")
+    endif()
 endif()
 
 # Every immutable bank is CPU-specific even though both use one runtime ABI.

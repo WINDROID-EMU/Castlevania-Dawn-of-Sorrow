@@ -6804,3 +6804,8 @@ mode = "arm"
 cpu  = "arm9"
 kind = "runtime_observed"
 # hits = 5, seen as span
+
+[[entry_point]]
+addr = 0x02232B98
+mode = "arm"
+name = "FUN_02232b98"

@@ -82,3 +82,17 @@ extracted/overlays/*.bin
 performance-*.jsonl
 smoke_test_results*/
 dispatch_misses*.log
+
+# ── Android App & Toolchain ────────────────────────────────────────────────
+android/.gradle/
+android/local.properties
+android/**/build/
+android/.cxx/
+android/**/.cxx/
+android/build-sdl3-arm64/
+android/installed-sdl3-arm64/
+android/thirdparty/
+android/app/src/main/jniLibs/
+*.apk
+*.aab
+

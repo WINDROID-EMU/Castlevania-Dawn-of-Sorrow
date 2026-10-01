@@ -3782,3 +3782,48 @@ cpu  = "arm7"
 kind = "runtime_observed"
 # hits = 1, seen as span
 
+
+[[entry_point]]
+addr = 0x038017F4
+mode = "arm"
+name = "FUN_038017f4"
+
+[[entry_point]]
+addr = 0x038017F8
+mode = "arm"
+name = "FUN_038017f8"
+
+[[entry_point]]
+addr = 0x03801800
+mode = "arm"
+name = "FUN_03801800"
+
+[[entry_point]]
+addr = 0x0380181C
+mode = "arm"
+name = "FUN_0380181c"
+
+[[entry_point]]
+addr = 0x03801828
+mode = "arm"
+name = "FUN_03801828"
+
+[[entry_point]]
+addr = 0x0380183C
+mode = "arm"
+name = "FUN_0380183c"
+
+[[entry_point]]
+addr = 0x03801844
+mode = "arm"
+name = "FUN_03801844"
+
+[[entry_point]]
+addr = 0x03801858
+mode = "arm"
+name = "FUN_03801858"
+
+[[entry_point]]
+addr = 0x03802460
+mode = "arm"
+name = "FUN_03802460"

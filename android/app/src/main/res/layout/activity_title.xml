@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_title_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/title_bg_gradient"
+    android:keepScreenOn="true">
+
+    <!-- Atmospheric background filling edge-to-edge for ultrawide screens -->
+    <ImageView
+        android:id="@+id/img_bg_blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/title_screen"
+        android:scaleType="centerCrop"
+        android:alpha="0.22"
+        android:contentDescription="@null" />
+
+    <!-- Main sharp artwork adapting seamlessly to any aspect ratio without cropping -->
+    <ImageView
+        android:id="@+id/img_title_artwork"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:src="@drawable/title_screen"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name" />
+
+    <!-- Bottom interactive prompt container -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_press_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PRESS START"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.18"
+            android:shadowColor="#000000"
+            android:shadowDx="0"
+            android:shadowDy="2"
+            android:shadowRadius="10" />
+
+        <TextView
+            android:id="@+id/tv_rom_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#D1D4F9"
+            android:textSize="12sp"
+            android:shadowColor="#000000"
+            android:shadowDx="0"
+            android:shadowDy="1"
+            android:shadowRadius="4" />
+
+        <Button
+            android:id="@+id/btn_select_rom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_glow"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:text="Selecionar ROM (.nds)"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</RelativeLayout>

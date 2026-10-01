@@ -1,0 +1,14 @@
+[game]
+sha1 = "9d4b6f7e4c473954c763d27c59c33f57b8b2f9f9"
+
+[display]
+screen_layout = "stacked"
+adaptive_widescreen = "none"
+
+[system]
+startup_mode = "automatic"
+freebios = true
+
+[cartridge]
+save_type = "eeprom"
+save_size = 65536
